@@ -31,6 +31,25 @@ extension GitHubRequest {
     var baseURL: URL {
         return URL(string: "https://api.github.com")!
     }
+    
+    // リクエストを表す型のURLRequest型へのマッピング
+    func buildURLRequest() -> URLRequest {
+        let url = baseURL.appendingPathComponent(path)
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        
+        switch method {
+        case .get:
+            components?.queryItems = queryItems
+            
+        default:
+            fatalError("Unsopported method \(method)")
+        }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.url = components?.url
+        urlRequest.httpMethod = method.rawValue
+        return urlRequest
+    }
 }
 
 
