@@ -50,6 +50,21 @@ extension GitHubRequest {
         urlRequest.httpMethod = method.rawValue
         return urlRequest
     }
+    
+    // Data型とHTTPURLResponse型のレスポンスを表す型へのマッピング
+    func response(from data: Data, urlResponse: URLResponse) throws -> Response {
+        let decoder = JSONDecoder()
+        
+        if case (200..<300)? = (urlResponse as? HTTPURLResponse)?.statusCode {
+            // JSONからモデルをインスタンス化
+            return try decoder.decode(Response.self, from: data)
+        } else {
+            // JSONからAPIエラーをインスタンス化
+            throw try decoder.decode(GitHubAPIError.self, from: data)
+        }
+    }
+    
+    
 }
 
 
