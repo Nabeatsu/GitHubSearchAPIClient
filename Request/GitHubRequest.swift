@@ -14,6 +14,11 @@ import Foundation
 // GitHubRequesプロトコルに定義する
 
 protocol GitHubRequest {
+    // リクエストに応じてレスポンスの構造があらかじめ決められている
+    // それらのレスポンスの方をリクエストの型に紐づけてリクエストの型からレスポンスの型を決定できるようにする。
+    // Response型によってそれを実現する
+    associatedtype Response: Decodable
+    
     var baseURL: URL { get }
     var path: String { get }
     var method: HTTPMethod { get }
