@@ -13,7 +13,7 @@
 import Foundation
 
 // JSONからインスタンス化が必要なのでItemもSearchRepositoryもDecodableの型制約を付ける
-struct SearchRepository<Item: Decodable>: Decodable {
+struct SearchResponse<Item: Decodable>: Decodable {
     let totalCount: Int
     let items: [Item]
     
