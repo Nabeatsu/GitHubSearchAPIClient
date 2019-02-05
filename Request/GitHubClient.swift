@@ -18,6 +18,26 @@ class GitHubClient {
         return session
     }()
     
+    
+    // 使用例
+//    let client = GitHubClient()
+//    let request = GitHubAPI.SearchRepositories(keyword: "swift")
+//
+//    client.send(request: request) { result in
+//    switch result {
+//    case .success(let value):
+//    // 成功
+//    case .failure(.connectionError(let error)):
+//    // 通信に失敗した場合
+//    case .failure(.responseParseError(let error)):
+//    // レスポンスの解釈に失敗した場合
+//    case .failure(.apiError(let error)):
+//    // エラーレスポンスを受け取った場合
+//    // errorの方はGitHubAPIErrorとなる
+//    }
+//    }
+
+    
     func send<Request: GitHubRequest>(request: Request, completion: @escaping (Result<Request.Response, GitHubClientError>) -> Void) {
         let urlRequest = request.buildURLRequest()
         let task = session.dataTask(with: urlRequest) {
@@ -48,3 +68,5 @@ class GitHubClient {
         task.resume()
     }
 }
+
+
